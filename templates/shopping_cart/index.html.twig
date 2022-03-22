@@ -1,0 +1,54 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello SoppingCartController!{% endblock %}
+
+{% block body %}
+
+    <h2>Panier</h2>
+
+    <table class="table" id="cart">
+        <thead>
+        <tr>
+            <th>Nom</th>
+            <th>Prix unitaire</th>
+            <th>Qt</th>
+            <th>Total</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for item in cart.items %}
+            <tr>
+                <td>{{ item.pizza.name }}</td>
+                <td>{{ item.pizza.totalPrice }} €</td>
+                <td>
+                    <input type="number" value="{{ item.qt }}"
+                    class="form-control qt" data-id="{{ item.id }}">
+                </td>
+                <td>
+                    <span class="price">
+                        {{ item.qt * item.pizza.totalPrice }}
+                    </span>
+                    €
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+
+        <tfoot>
+        <tr>
+            <td colspan="3"></td>
+            <td>
+                <span class="price">
+                {{ cart.total }}
+                </span> €
+            </td>
+        </tr>
+        </tfoot>
+    </table>
+
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    {{ encore_entry_script_tags('cart') }}
+{% endblock %}

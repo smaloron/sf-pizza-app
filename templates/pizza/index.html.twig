@@ -1,0 +1,49 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Pizza index{% endblock %}
+
+{% block body %}
+    <h1>Pizza index</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Pizza</th>
+                <th>Prix</th>
+
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for pizza in pizzas %}
+            <tr>
+
+                <td>{{ pizza.name }}</td>
+                <td>{{ pizza.totalPrice }}</td>
+                <td>
+                    <a href="{{ path('app_pizza_show', {'id': pizza.id}) }}">Détails</a>
+                    {% if is_granted('ROLE_USER') %}
+
+                        {# <a href="{{ path('app_cart_add', {'id': pizza.id}) }}">Ajouter au panier</a> #}
+                        <a href="#" class="addToCart" data-id="{{ pizza.id }}">Ajouter au panier</a>
+                        <a href="{{ path('app_pizza_edit', {'id': pizza.id}) }}">edit</a>
+                    {% endif %}
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="4">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <div class="navigation">
+        {{ knp_pagination_render(pizzas) }}
+    </div>
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    {{ encore_entry_script_tags('pizza') }}
+{% endblock %}
